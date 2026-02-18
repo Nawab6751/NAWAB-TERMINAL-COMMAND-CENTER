@@ -3,110 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAWAB-TERMINAL | A to Z Database</title>
+    <title>NAWAB ZADA | Smart Terminal Hub</title>
     <style>
-        :root { --gold: #D4AF37; --green: #00ff41; --bg: #0a0a0a; }
+        :root { --gold: #D4AF37; --green: #00ff41; --bg: #050505; }
         body { background: var(--bg); color: #ccc; font-family: 'Courier New', monospace; margin: 0; padding: 15px; padding-bottom: 100px; }
-        .header { text-align: center; border: 2px solid var(--gold); padding: 10px; margin-bottom: 20px; background: rgba(212,175,55,0.1); }
-        .cat-tag { background: var(--gold); color: #000; padding: 10px; font-weight: bold; margin: 20px 0 10px 0; display: block; text-align: center; border-radius: 5px; text-transform: uppercase; letter-spacing: 2px; }
-        .card { background: #161616; border-left: 4px solid var(--gold); padding: 12px; margin: 8px 0; border-radius: 4px; }
-        .cmd-line { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; border-radius: 4px; border: 1px dashed #333; }
-        .cmd-text { color: var(--green); font-weight: bold; font-size: 0.85em; white-space: nowrap; overflow-x: auto; }
-        .copy-btn { background: var(--gold); border: none; padding: 5px 12px; color: #000; cursor: pointer; border-radius: 3px; font-weight: bold; font-size: 0.7em; }
-        .desc { font-size: 0.8em; color: #aaa; margin-top: 6px; }
+        .header { text-align: center; border-bottom: 2px solid var(--gold); padding: 15px; margin-bottom: 20px; }
+        .cat { background: var(--gold); color: #000; padding: 8px; font-weight: bold; margin-top: 25px; display: block; text-align: center; border-radius: 4px; text-transform: uppercase; }
+        .card { background: #111; border: 1px solid #333; padding: 12px; margin: 10px 0; border-radius: 5px; border-left: 5px solid var(--gold); }
+        .cmd-box { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; border-radius: 4px; }
+        .cmd-text { color: var(--green); font-weight: bold; font-size: 0.9em; }
+        .copy-btn { background: var(--gold); border: none; padding: 6px 12px; color: #000; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 0.7em; }
+        .desc { font-size: 0.8em; color: #999; margin-top: 8px; }
 
-        /* AI Bot Hub */
-        #ai-widget { position: fixed; bottom: 15px; right: 15px; z-index: 1000; }
-        #ai-chat { width: 300px; height: 400px; background: #050505; border: 2px solid var(--gold); border-radius: 10px; display: none; flex-direction: column; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-        #ai-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85em; color: #0f0; border-bottom: 1px solid #333; }
-        .ai-input-area { display: flex; padding: 5px; }
-        #ai-input { flex: 1; background: #000; border: 1px solid #444; color: white; padding: 12px; border-radius: 5px; outline: none; }
-        .ai-toggle { width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px; }
+        /* FIXED SMART AI UI */
+        #ai-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+        #ai-chat { width: 320px; height: 420px; background: #000; border: 2px solid var(--gold); border-radius: 10px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 0 25px var(--gold); }
+        #ai-messages { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.85em; color: var(--green); }
+        .ai-input-box { display: flex; border-top: 1px solid #333; padding: 5px; }
+        #ai-input { flex: 1; background: #111; border: 1px solid #444; color: #fff; padding: 12px; border-radius: 5px; outline: none; }
+        .ai-toggle { width: 65px; height: 65px; background: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 30px; box-shadow: 0 0 15px var(--gold); }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2 style="color:var(--gold); margin:0;">NAWAB ZADA MASTER TERMINAL</h2>
-        <p style="font-size:0.7em; color:gray;">VERSION: A-Z ULTIMATE DATABASE</p>
+        <h1 style="color:var(--gold); margin:0; font-size: 1.5em;">NAWAB ZADA MASTER TERMINAL</h1>
+        <p style="font-size:0.7em;">A-Z Commands & Targeted AI Assistant</p>
     </div>
 
-    <div class="cat-tag">Basic Setup & Storage</div>
-    <script>
-        const commands = [
-            {cat: "Setup", cmd: "pkg update && pkg upgrade -y", desc: "System ko naye version par update karne ke liye."},
-            {cat: "Setup", cmd: "termux-setup-storage", desc: "Internal storage (SD Card) ka access lene ke liye."},
-            {cat: "Setup", cmd: "pkg install python python2 python3 -y", desc: "Python environment setup karne ke liye."},
-            {cat: "Files", cmd: "ls", desc: "Folder ke andar mojood files dekhne ke liye."},
-            {cat: "Files", cmd: "cd [folder_name]", desc: "Kisi specific folder ke andar jane ke liye."},
-            {cat: "Files", cmd: "rm -rf [file/folder]", desc: "Kisi bhi cheez ko hamesha ke liye delete karne ke liye (Danger!)."},
-            {cat: "Files", cmd: "mkdir [name]", desc: "Naya folder banane ke liye."},
-            {cat: "Pentest", cmd: "pkg install nmap -y", desc: "Networking scanning tool (Nmap) install karne ke liye."},
-            {cat: "Pentest", cmd: "pkg install git -y", desc: "GitHub se tools download karne ke liye Git install karein."},
-            {cat: "Pentest", cmd: "pkg install metasploit -y", desc: "Metasploit Framework (Hacking Hub) install karne ke liye."},
-            {cat: "Pentest", cmd: "pkg install sqlmap -y", desc: "SQL injection database attack ke liye."},
-            {cat: "Pentest", cmd: "pkg install tor -y", desc: "IP address chupane aur dark web access ke liye."},
-            {cat: "Permissions", cmd: "chmod +x [file_name]", desc: "File ko chalne ki ijazat (permission) dene ke liye."},
-            {cat: "Social", cmd: "pkg install php -y", desc: "Phishing pages host karne ke liye PHP install karein."},
-            {cat: "Social", cmd: "pkg install wget curl -y", desc: "Internet se direct files download karne ke liye."}
-        ];
-
-        // Displaying commands
-        document.write(commands.map(c => `
-            <div class="card">
-                <div class="cmd-line">
-                    <span class="cmd-text">${c.cmd}</span>
-                    <button class="copy-btn" onclick="cp('${c.cmd}')">COPY</button>
-                </div>
-                <div class="desc">${c.desc}</div>
-            </div>
-        `).join(''));
-
-        function cp(t) { navigator.clipboard.writeText(t); alert("Copied: " + t); }
-    </script>
+    <div class="cat">Core Setup (A-Z)</div>
+    <div id="command-list"></div>
 
     <div id="ai-widget">
         <div id="ai-chat">
-            <div style="background:var(--gold); color:000; padding:10px; font-weight:bold; text-align:center;">NAWAB AI ASSISTANT</div>
+            <div style="background:var(--gold); color:#000; padding:10px; font-weight:bold; text-align:center;">NAWAB SMART AI</div>
             <div id="ai-messages">
-                <div>[AI]: Jani, main ab bilkul 'To the Point' jawab doon ga. Kya poochna hai?</div>
+                <div>[AI]: Jani, sawal poocho, main sirf kaam ka jawab doon ga.</div>
             </div>
-            <div class="ai-input-area">
-                <input type="text" id="ai-input" placeholder="Type command name...">
-                <button onclick="aiAsk()" style="background:var(--gold); border:none; padding:10px; font-weight:bold;">ASK</button>
+            <div class="ai-input-box">
+                <input type="text" id="ai-input" placeholder="Ask about any command...">
+                <button onclick="smartAsk()" style="background:var(--gold); border:none; padding:10px; font-weight:bold; cursor:pointer;">GO</button>
             </div>
         </div>
         <div class="ai-toggle" onclick="toggleAI()">🤖</div>
     </div>
 
     <script>
-        function toggleAI() {
-            const chat = document.getElementById('ai-chat');
-            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
-        }
+        const db = [
+            {c: "pkg update && pkg upgrade -y", d: "System ko update aur upgrade karne ke liye."},
+            {c: "pkg install whois -y", d: "Whois install karne ke liye (Domain info scanner)."},
+            {c: "pkg install nmap -y", d: "Network scanning tool install karein."},
+            {c: "pkg install metasploit -y", d: "Full exploitation framework (Hacking Kit)."},
+            {c: "termux-setup-storage", d: "Internal storage ka access lene ke liye."},
+            {c: "pkg install python -y", d: "Python environment setup karne ke liye."},
+            {c: "pkg install sqlmap -y", d: "SQL injection database attack tool."},
+            {c: "pkg install git php curl wget -y", d: "Zaroori dependencies install karne ke liye."}
+        ];
 
-        function aiAsk() {
+        const listDiv = document.getElementById('command-list');
+        db.forEach(item => {
+            listDiv.innerHTML += `
+                <div class="card">
+                    <div class="cmd-box">
+                        <span class="cmd-text">${item.c}</span>
+                        <button class="copy-btn" onclick="cp('${item.c}')">COPY</button>
+                    </div>
+                    <div class="desc">${item.d}</div>
+                </div>
+            `;
+        });
+
+        function cp(t) { navigator.clipboard.writeText(t); alert("Copied: " + t); }
+        function toggleAI() { const chat = document.getElementById('ai-chat'); chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex'; }
+
+        // THE SMART LOGIC (TARGETED RESPONSES)
+        function smartAsk() {
             const inp = document.getElementById('ai-input');
             const box = document.getElementById('ai-messages');
             if(!inp.value) return;
 
-            box.innerHTML += `<div style="color:white; margin-top:10px;">You: ${inp.value}</div>`;
-            let q = inp.value.toLowerCase();
+            let userQ = inp.value.toLowerCase();
+            box.innerHTML += `<div style="color:#fff; margin-top:10px;">> ${inp.value}</div>`;
             inp.value = "";
 
-            let reply = "Jani, ye command list mein check karo, wahan asaan lafzon mein samjhaya gaya hai.";
-            
-            // Smart Targeted Logic
-            if(q.includes("nmap")) reply = "Nmap ports scan karta hai. Use: nmap [target IP]";
-            else if(q.includes("metasploit")) reply = "Metasploit payloads banane aur system exploit karne ke liye hai.";
-            else if(q.includes("chmod")) reply = "Chmod permissions change karta hai. 'chmod +x' se file run hoti hai.";
-            else if(q.includes("ls")) reply = "ls se aap current directory ki files ki list dekh sakte hain.";
-            else if(q.includes("sqlmap")) reply = "SQLmap website ki database dhoondne ke liye use hota hai.";
+            let reply = "Jani, ye command list mein mojood nahi hai, thori detail se poocho.";
+
+            if(userQ.includes("whois")) reply = "Whois command se aap kisi bhi website ka IP aur owner ki details nikal sakte hain. Pehle 'pkg install whois' karein.";
+            else if(userQ.includes("nmap")) reply = "Nmap ports scan karta hai. Open ports dekhne ke liye use karein: nmap [target IP]";
+            else if(userQ.includes("metasploit")) reply = "Metasploit penetration testing ke liye hai. Start karne ke liye 'msfconsole' type karein.";
+            else if(userQ.includes("permission") || userQ.includes("chmod")) reply = "Permission ke liye 'chmod +x [filename]' use hota hai.";
+            else if(userQ.includes("update")) reply = "Sab se pehle 'pkg update && pkg upgrade -y' chalana lazmi hai.";
+            else if(userQ.includes("ls")) reply = "ls command folders ke andar mojood files ki list dikhati hai.";
 
             setTimeout(() => {
                 box.innerHTML += `<div style="color:var(--gold); margin-top:5px;">[AI]: ${reply}</div>`;
                 box.scrollTop = box.scrollHeight;
-            }, 400);
+            }, 300);
         }
     </script>
 </body>
