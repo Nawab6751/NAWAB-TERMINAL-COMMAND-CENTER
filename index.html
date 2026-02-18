@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAWAB-TERMINAL | Master Guide</title>
+    <style>
+        :root { --gold: #D4AF37; --green: #00ff41; --bg: #0a0a0a; }
+        body { background: var(--bg); color: #ccc; font-family: 'Courier New', monospace; margin: 0; padding: 15px; }
+        
+        .header { text-align: center; border: 2px solid var(--gold); padding: 15px; margin-bottom: 25px; background: rgba(212, 175, 55, 0.1); }
+        .nawab-title { color: var(--gold); font-size: 1.8em; font-weight: bold; text-transform: uppercase; }
+        
+        .search-container { position: sticky; top: 10px; z-index: 100; background: var(--bg); padding-bottom: 10px; }
+        .search-box { width: 100%; padding: 15px; background: #111; border: 1px solid var(--gold); color: var(--green); border-radius: 5px; box-sizing: border-box; }
+        
+        .cat-tag { background: var(--gold); color: #000; padding: 5px 15px; font-weight: bold; border-radius: 20px; font-size: 0.8em; margin-top: 30px; display: inline-block; }
+        
+        .card { background: #161616; border: 1px solid #333; padding: 15px; margin: 10px 0; border-radius: 8px; position: relative; transition: 0.3s; }
+        .card:hover { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        
+        .cmd-line { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; border-radius: 5px; margin-bottom: 8px; border: 1px dashed #444; }
+        .cmd-text { color: var(--green); font-weight: bold; font-size: 1em; overflow-x: auto; white-space: nowrap; }
+        
+        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; color: #000; cursor: pointer; border-radius: 4px; font-size: 0.7em; font-weight: bold; }
+        .copy-btn:active { transform: scale(0.95); }
+
+        .desc { font-size: 0.85em; color: #bbb; line-height: 1.4; }
+        .level { font-size: 0.7em; margin-top: 5px; display: block; }
+        .basic { color: #00bcff; }
+        .adv { color: #ff3e3e; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="nawab-title">NAWAB ZADA COMMAND HUB</div>
+        <p style="margin: 5px 0 0 0;">Official Team Reference Guide v3.0</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInp" onkeyup="filterCmds()" placeholder="Search Command (e.g. nmap, root, dir)..." class="search-box">
+    </div>
+
+    <div id="cmdList">
+        <div class="cat-tag">BASIC FUNDAMENTALS</div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">apt update && apt upgrade -y</span>
+                <button class="copy-btn" onclick="copy('apt update && apt upgrade -y')">COPY</button>
+            </div>
+            <div class="desc">System aur packages ko update karne ke liye.</div>
+            <span class="level basic">Level: Beginner</span>
+        </div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">ls -la</span>
+                <button class="copy-btn" onclick="copy('ls -la')">COPY</button>
+            </div>
+            <div class="desc">Saari files (chupi hui files samait) ki list detail ke saath dekhna.</div>
+            <span class="level basic">Level: Beginner</span>
+        </div>
+
+        <div class="cat-tag">ADVANCED TOOLS & NETWORKING</div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">pkg install nmap -y</span>
+                <button class="copy-btn" onclick="copy('pkg install nmap -y')">COPY</button>
+            </div>
+            <div class="desc">Network Scanner install karne ke liye (Ports check karna).</div>
+            <span class="level adv">Level: Advanced</span>
+        </div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">nmap -sV [IP_ADDRESS]</span>
+                <button class="copy-btn" onclick="copy('nmap -sV ')">COPY</button>
+            </div>
+            <div class="desc">Target IP ke open ports aur un par chalne wali services scan karna.</div>
+            <span class="level adv">Level: Advanced</span>
+        </div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">git clone [URL]</span>
+                <button class="copy-btn" onclick="copy('git clone ')">COPY</button>
+            </div>
+            <div class="desc">GitHub se koi bhi tool ya script download karna.</div>
+            <span class="level basic">Level: Intermediate</span>
+        </div>
+
+        <div class="card">
+            <div class="cmd-line">
+                <span class="cmd-text">find / -name "config.php"</span>
+                <button class="copy-btn" onclick="copy('find / -name ')">COPY</button>
+            </div>
+            <div class="desc">Poore system mein specific file dhoondne ke liye.</div>
+            <span class="level adv">Level: Professional</span>
+        </div>
+    </div>
+
+    <script>
+        function copy(text) {
+            navigator.clipboard.writeText(text);
+            alert("Command Copied: " + text);
+        }
+
+        function filterCmds() {
+            let input = document.getElementById('searchInp').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let card of cards) {
+                card.style.display = card.innerText.toLowerCase().includes(input) ? "" : "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
