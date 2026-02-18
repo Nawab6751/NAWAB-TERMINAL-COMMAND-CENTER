@@ -3,119 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAWAB-TERMINAL | Master Guide</title>
+    <title>NAWAB-TERMINAL | Full Command Database</title>
     <style>
         :root { --gold: #D4AF37; --green: #00ff41; --bg: #0a0a0a; }
-        body { background: var(--bg); color: #ccc; font-family: 'Courier New', monospace; margin: 0; padding: 15px; }
+        body { background: var(--bg); color: #ccc; font-family: 'Courier New', monospace; margin: 0; padding: 15px; padding-bottom: 100px; }
         
         .header { text-align: center; border: 2px solid var(--gold); padding: 15px; margin-bottom: 25px; background: rgba(212, 175, 55, 0.1); }
-        .nawab-title { color: var(--gold); font-size: 1.8em; font-weight: bold; text-transform: uppercase; }
+        .nawab-title { color: var(--gold); font-size: 1.4em; font-weight: bold; }
         
-        .search-container { position: sticky; top: 10px; z-index: 100; background: var(--bg); padding-bottom: 10px; }
-        .search-box { width: 100%; padding: 15px; background: #111; border: 1px solid var(--gold); color: var(--green); border-radius: 5px; box-sizing: border-box; }
+        .cat-tag { background: var(--gold); color: #000; padding: 8px 15px; font-weight: bold; border-radius: 5px; margin: 25px 0 10px 0; display: block; text-align: center; }
         
-        .cat-tag { background: var(--gold); color: #000; padding: 5px 15px; font-weight: bold; border-radius: 20px; font-size: 0.8em; margin-top: 30px; display: inline-block; }
+        .card { background: #161616; border-left: 4px solid var(--gold); padding: 12px; margin: 8px 0; border-radius: 4px; }
+        .cmd-line { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 8px; border-radius: 4px; border: 1px dashed #333; }
+        .cmd-text { color: var(--green); font-weight: bold; font-size: 0.85em; overflow-x: auto; white-space: nowrap; }
         
-        .card { background: #161616; border: 1px solid #333; padding: 15px; margin: 10px 0; border-radius: 8px; position: relative; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-        
-        .cmd-line { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; border-radius: 5px; margin-bottom: 8px; border: 1px dashed #444; }
-        .cmd-text { color: var(--green); font-weight: bold; font-size: 1em; overflow-x: auto; white-space: nowrap; }
-        
-        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; color: #000; cursor: pointer; border-radius: 4px; font-size: 0.7em; font-weight: bold; }
-        .copy-btn:active { transform: scale(0.95); }
+        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; color: #000; cursor: pointer; border-radius: 3px; font-weight: bold; font-size: 0.7em; }
+        .desc { font-size: 0.8em; color: #aaa; margin-top: 5px; line-height: 1.3; }
 
-        .desc { font-size: 0.85em; color: #bbb; line-height: 1.4; }
-        .level { font-size: 0.7em; margin-top: 5px; display: block; }
-        .basic { color: #00bcff; }
-        .adv { color: #ff3e3e; }
+        /* Floating AI Bot */
+        #ai-widget { position: fixed; bottom: 15px; right: 15px; z-index: 1000; }
+        #ai-chat { width: 280px; height: 350px; background: #111; border: 2px solid var(--gold); border-radius: 10px; display: none; flex-direction: column; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+        #ai-messages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.8em; color: #0f0; }
+        .ai-input-area { display: flex; border-top: 1px solid #333; }
+        #ai-input { flex: 1; background: #000; border: none; color: white; padding: 10px; outline: none; }
+        .ai-toggle { width: 55px; height: 55px; background: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 24px; box-shadow: 0 0 15px var(--gold); }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="nawab-title">NAWAB ZADA COMMAND HUB</div>
-        <p style="margin: 5px 0 0 0;">Official Team Reference Guide v3.0</p>
+        <div class="nawab-title">NAWAB ZADA MASTER COMMAND HUB</div>
+        <p style="font-size:0.75em; color: #888;">Complete Termux & Linux Reference</p>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInp" onkeyup="filterCmds()" placeholder="Search Command (e.g. nmap, root, dir)..." class="search-box">
+    <div class="cat-tag">1. FUNDAMENTAL BASICS</div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">apt update && apt upgrade -y</span>
+            <button class="copy-btn" onclick="cp('apt update && apt upgrade -y')">COPY</button>
+        </div>
+        <div class="desc">System ko update karne ke liye.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">termux-setup-storage</span>
+            <button class="copy-btn" onclick="cp('termux-setup-storage')">COPY</button>
+        </div>
+        <div class="desc">Internal storage ka access lene ke liye.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">ls</span>
+            <button class="copy-btn" onclick="cp('ls')">COPY</button>
+        </div>
+        <div class="desc">List files: Folder ki files dekhne ke liye.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">cd [folder_name]</span>
+            <button class="copy-btn" onclick="cp('cd ')">COPY</button>
+        </div>
+        <div class="desc">Change Directory: Kisi folder mein jane ke liye.</div>
     </div>
 
-    <div id="cmdList">
-        <div class="cat-tag">BASIC FUNDAMENTALS</div>
-
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">apt update && apt upgrade -y</span>
-                <button class="copy-btn" onclick="copy('apt update && apt upgrade -y')">COPY</button>
-            </div>
-            <div class="desc">System aur packages ko update karne ke liye.</div>
-            <span class="level basic">Level: Beginner</span>
+    <div class="cat-tag">2. ESSENTIAL TOOLS INSTALL</div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">pkg install python python2 -y</span>
+            <button class="copy-btn" onclick="cp('pkg install python python2 -y')">COPY</button>
         </div>
-
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">ls -la</span>
-                <button class="copy-btn" onclick="copy('ls -la')">COPY</button>
-            </div>
-            <div class="desc">Saari files (chupi hui files samait) ki list detail ke saath dekhna.</div>
-            <span class="level basic">Level: Beginner</span>
+        <div class="desc">Python scripts chalane ke liye install karein.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">pkg install git php curl wget -y</span>
+            <button class="copy-btn" onclick="cp('pkg install git php curl wget -y')">COPY</button>
         </div>
+        <div class="desc">GitHub aur files download karne ke zaroori tools.</div>
+    </div>
 
-        <div class="cat-tag">ADVANCED TOOLS & NETWORKING</div>
-
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">pkg install nmap -y</span>
-                <button class="copy-btn" onclick="copy('pkg install nmap -y')">COPY</button>
-            </div>
-            <div class="desc">Network Scanner install karne ke liye (Ports check karna).</div>
-            <span class="level adv">Level: Advanced</span>
+    <div class="cat-tag">3. ADVANCED & PENTESTING</div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">pkg install nmap -y</span>
+            <button class="copy-btn" onclick="cp('pkg install nmap -y')">COPY</button>
         </div>
-
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">nmap -sV [IP_ADDRESS]</span>
-                <button class="copy-btn" onclick="copy('nmap -sV ')">COPY</button>
-            </div>
-            <div class="desc">Target IP ke open ports aur un par chalne wali services scan karna.</div>
-            <span class="level adv">Level: Advanced</span>
+        <div class="desc">Nmap: Port scanning aur network scanning ke liye.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">pkg install metasploit -y</span>
+            <button class="copy-btn" onclick="cp('pkg install metasploit -y')">COPY</button>
         </div>
-
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">git clone [URL]</span>
-                <button class="copy-btn" onclick="copy('git clone ')">COPY</button>
-            </div>
-            <div class="desc">GitHub se koi bhi tool ya script download karna.</div>
-            <span class="level basic">Level: Intermediate</span>
+        <div class="desc">Metasploit: System penetration aur exploitation ke liye.</div>
+    </div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">git clone https://github.com/sqlmapproject/sqlmap</span>
+            <button class="copy-btn" onclick="cp('git clone https://github.com/sqlmapproject/sqlmap')">COPY</button>
         </div>
+        <div class="desc">SQLmap: Database vulnerabilities scan karne ke liye.</div>
+    </div>
 
-        <div class="card">
-            <div class="cmd-line">
-                <span class="cmd-text">find / -name "config.php"</span>
-                <button class="copy-btn" onclick="copy('find / -name ')">COPY</button>
-            </div>
-            <div class="desc">Poore system mein specific file dhoondne ke liye.</div>
-            <span class="level adv">Level: Professional</span>
+    <div class="cat-tag">4. FILE PERMISSIONS</div>
+    <div class="card">
+        <div class="cmd-line">
+            <span class="cmd-text">chmod +x *</span>
+            <button class="copy-btn" onclick="cp('chmod +x *')">COPY</button>
         </div>
+        <div class="desc">Saari files ko "chalne ke qabil" (executable) banane ke liye.</div>
+    </div>
+
+    <div id="ai-widget">
+        <div id="ai-chat">
+            <div style="background:var(--gold); color:000; padding:8px; font-weight:bold; text-align:center;">NAWAB TERMINAL AI</div>
+            <div id="ai-messages">
+                <div>[AI]: Jani, list lambi hai lekin ghabrana nahi! Kuch poochna hai?</div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" id="ai-input" placeholder="Type here...">
+                <button onclick="aiAsk()" style="background:var(--gold); border:none; padding:10px;">ASK</button>
+            </div>
+        </div>
+        <div class="ai-toggle" onclick="toggleAI()">🤖</div>
     </div>
 
     <script>
-        function copy(text) {
-            navigator.clipboard.writeText(text);
-            alert("Command Copied: " + text);
+        function cp(t) {
+            navigator.clipboard.writeText(t);
+            alert("Command Copied: " + t);
         }
-
-        function filterCmds() {
-            let input = document.getElementById('searchInp').value.toLowerCase();
-            let cards = document.getElementsByClassName('card');
-            for (let card of cards) {
-                card.style.display = card.innerText.toLowerCase().includes(input) ? "" : "none";
-            }
+        function toggleAI() {
+            const chat = document.getElementById('ai-chat');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+        function aiAsk() {
+            const inp = document.getElementById('ai-input');
+            const box = document.getElementById('ai-messages');
+            if(!inp.value) return;
+            box.innerHTML += `<div style="color:white;">You: ${inp.value}</div>`;
+            let q = inp.value.toLowerCase();
+            inp.value = "";
+            let r = "Jani, ye tool Nawab ZADA ne team ki asani ke liye banaya hai. List upar mojood hai!";
+            if(q.includes("nmap")) r = "Nmap ports check karne ke liye hai. Command No. 3 dekho!";
+            if(q.includes("error")) r = "Agar 'Permission Denied' aaye toh 'chmod +x' wali command use karo.";
+            setTimeout(() => {
+                box.innerHTML += `<div>[AI]: ${r}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 500);
         }
     </script>
-
 </body>
 </html>
